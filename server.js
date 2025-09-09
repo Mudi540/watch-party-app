@@ -11,6 +11,9 @@ const io = new Server(server);
 // Serve static files
 app.use(express.static("public"));
 
+// Make uploads accessible
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 // File upload config
 const upload = multer({ dest: "uploads/" });
 
