@@ -1,0 +1,24 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #111;
+  color: white;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  color: #ffcc00;
+}
+
+form {
+  margin: 20px 0;
+}
+
+video {
+  width: 80%;
+  max-width: 800px;
+  margin-top: 20px;
+  border: 2px solid #ffcc00;
+  border-radius: 10px;
+}
