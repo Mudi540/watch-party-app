@@ -26,6 +26,9 @@ uploadForm.addEventListener("submit", async (e) => {
   }
 });
 
+let isRemoteSeek = false;
+let seekTimeout;
+
 // Listen for video URL broadcast from server
 socket.on("videoUploaded", (url) => {
   video.src = url;
@@ -36,10 +39,26 @@ socket.on("videoUploaded", (url) => {
 // Controls
 video.addEventListener("play", () => socket.emit("play"));
 video.addEventListener("pause", () => socket.emit("pause"));
-video.addEventListener("seeked", () => socket.emit("seek", video.currentTime));
 
+video.addEventListener("seeked", () => {
+  if (isRemoteSeek) {
+    // Reset the guard so next local seek works normally
+    isRemoteSeek = false;
+    return;
+  }
+
+  // Debounce to avoid spamming on rapid seeks
+  clearTimeout(seekTimeout);
+  seekTimeout = setTimeout(() => {
+    socket.emit("seek", video.currentTime);
+  }, 300);
+});
+
+// Incoming events
 socket.on("play", () => video.play());
 socket.on("pause", () => video.pause());
+
 socket.on("seek", (time) => {
+  isRemoteSeek = true;
   video.currentTime = time;
 });
