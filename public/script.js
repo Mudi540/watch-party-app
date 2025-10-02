@@ -44,7 +44,7 @@ const ml = cloudinary.createMediaLibrary(
         const selectedUrl = data.assets[0].secure_url;
 
         // Tell server so everyone sees the chosen video
-        socket.emit("videoUploaded", selectedUrl);
+        socket.on("videoUploaded", selectedUrl);
 
         // Update local video player
         video.src = selectedUrl;
