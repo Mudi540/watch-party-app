@@ -26,6 +26,37 @@ uploadForm.addEventListener("submit", async (e) => {
   }
 });
 
+// === Cloudinary Media Library Integration ===
+const cloudName = dx58lo8kg;   // 🔹 replace with your Cloudinary cloud name
+const apiKey = 137231655629768;         // 🔹 replace with your Cloudinary API key
+
+const ml = cloudinary.createMediaLibrary(
+  {
+    cloud_name: cloudName,
+    api_key: apiKey,
+    multiple: false,
+    max_files: 1,
+    resource_type: "video"
+  },
+  {
+    insertHandler: (data) => {
+      if (data.assets && data.assets.length > 0) {
+        const selectedUrl = data.assets[0].secure_url;
+
+        // Tell server so everyone sees the chosen video
+        socket.emit("videoUploaded", selectedUrl);
+
+        // Update local video player
+        video.src = selectedUrl;
+        video.load();
+        video.play();
+      }
+    }
+  },
+  "#chooseVideo" // 🔹 this is the ID of your "Choose from Library" button
+);
+
+
 let isRemoteSeek = false;
 let seekTimeout;
 
