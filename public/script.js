@@ -27,8 +27,8 @@ uploadForm.addEventListener("submit", async (e) => {
 });
 
 // === Cloudinary Media Library Integration ===
-const cloudName = dx58lo8kg;   // 🔹 replace with your Cloudinary cloud name
-const apiKey = 137231655629768;         // 🔹 replace with your Cloudinary API key
+const cloudName = "dx58lo8kg";   // 🔹 replace with your Cloudinary cloud name
+const apiKey = "137231655629768";         // 🔹 replace with your Cloudinary API key
 
 const ml = cloudinary.createMediaLibrary(
   {
@@ -44,7 +44,7 @@ const ml = cloudinary.createMediaLibrary(
         const selectedUrl = data.assets[0].secure_url;
 
         // Tell server so everyone sees the chosen video
-        socket.on("videoUploaded", selectedUrl);
+        socket.emit("videoUploaded", selectedUrl);
 
         // Update local video player
         video.src = selectedUrl;
