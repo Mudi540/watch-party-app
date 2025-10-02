@@ -59,6 +59,11 @@ io.on("connection", (socket) => {
   socket.on("play", () => socket.broadcast.emit("play"));
   socket.on("pause", () => socket.broadcast.emit("pause"));
   socket.on("seek", (time) => socket.broadcast.emit("seek", time));
+
+   socket.on("videoUploaded", (url) => {
+    currentVideoUrl = url;          // update current video
+    socket.broadcast.emit("videoUploaded", url); // tell everyone else
+  });
 });
 
 // Start server
