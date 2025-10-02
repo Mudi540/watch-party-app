@@ -62,7 +62,7 @@ io.on("connection", (socket) => {
 
    socket.on("videoUploaded", (url) => {
     currentVideoUrl = url;          // update current video
-    socket.broadcast.emit("videoUploaded", url); // tell everyone else
+    io.emit("videoUploaded", url); // tell everyone else
   });
 });
 
